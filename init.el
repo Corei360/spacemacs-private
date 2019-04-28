@@ -29,7 +29,7 @@ This function should only modify configuration layer settings."
    ;; If non-nil layers with lazy install support are lazy installed.
    ;; List of additional paths where to look for configuration layers.
    ;; Paths must have a trailing slash (i.e. `~/.mycontribs/')
-   dotspacemacs-configuration-layer-path '()
+   dotspacemacs-configuration-layer-path '("~/.spacemacs.d/private/")
 
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
@@ -54,9 +54,10 @@ This function should only modify configuration layer settings."
      ;; spell-checking
      ;; syntax-checking
      ;; version-control
-     c-c++
+     (c-c++ :variables c-c++-default-mode-for-headers 'c-mode)
      ;; cscope
      (gtags :variables gtags-enable-by-default t)
+     dean
      )
 
    ;; List of additional packages that will be installed without being
@@ -437,12 +438,18 @@ variables declared in `~/.spacemacs.env' or `~/.spacemacs.d/.spacemacs.env'.
 See the header of this file for more information."
   (spacemacs/load-spacemacs-env))
 
+(defun my-setup-indent (n)
+  ;; c/c++
+  (setq c-basic-offset n)
+  )
+
 (defun dotspacemacs/user-init ()
   "Initialization for user code:
 This function is called immediately after `dotspacemacs/init', before layer
 configuration.
 It is mostly for variables that should be set before packages are loaded.
 If you are unsure, try setting them in `dotspacemacs/user-config' first."
+  (my-setup-indent 8)
   )
 
 (defun dotspacemacs/user-load ()
@@ -458,7 +465,7 @@ This function is called at the very end of Spacemacs startup, after layer
 configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
-  (spacemacs/helm-gtags-define-keys-for-mode 'c-mode)
+ (spacemacs/helm-gtags-define-keys-for-mode 'c-mode)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
