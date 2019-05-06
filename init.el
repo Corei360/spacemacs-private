@@ -43,7 +43,7 @@ This function should only modify configuration layer settings."
      auto-completion
      ;; better-defaults
      emacs-lisp
-     ;; git
+     git
      ;; markdown
      multiple-cursors
      treemacs
@@ -54,10 +54,11 @@ This function should only modify configuration layer settings."
      ;; spell-checking
      ;; syntax-checking
      ;; version-control
-     (c-c++ :variables c-c++-default-mode-for-headers 'c-mode)
+     ;; (c-c++ :variables c-c++-default-mode-for-headers 'c-mode)
+     c-c++
      ;; cscope
      (gtags :variables gtags-enable-by-default t)
-     dean
+     ;; dean
      )
 
    ;; List of additional packages that will be installed without being
@@ -438,10 +439,40 @@ variables declared in `~/.spacemacs.env' or `~/.spacemacs.d/.spacemacs.env'.
 See the header of this file for more information."
   (spacemacs/load-spacemacs-env))
 
-(defun my-setup-indent (n)
-  ;; c/c++
-  (setq c-basic-offset n)
-  )
+;; (defun my-setup-indent (n)
+;;   ;; c/c++
+;;   (setq c-basic-offset n)
+;;   )
+
+;; (defun c-lineup-arglist-tabs-only (ignored)
+;;   "Line up argument lists by tabs, not spaces"
+;;   (let* ((anchor (c-langelem-pos c-syntactic-element))
+;; 	 (column (c-langelem-2nd-pos c-syntactic-element))
+;; 	 (offset (- (1+ column) anchor))
+;; 	 (steps (floor offset c-basic-offset)))
+;;     (* (max steps 1)
+;;        c-basic-offset)))
+
+;; (defun init-format-kernel-code()
+;;   (add-hook 'c-mode-common-hook
+;;             (lambda ()
+;;               ;; Add kernel style
+;;               (c-add-style
+;;                "linux-tabs-only"
+;;                '("linux" (c-offsets-alist
+;;                           (arglist-cont-nonempty
+;;                            c-lineup-gcc-asm-reg
+;;                            c-lineup-arglist-tabs-only))))))
+;;   (add-hook 'c-mode-hook
+;;             (lambda ()
+;;               (let ((filename (buffer-file-name)))
+;;                 ;; Enable kernel mode for the appropriate files
+;;                 (when (and filename
+;;                            (string-match (expand-file-name "/opt/src/linux-trees")
+;;                                          filename))
+;;                   (setq indent-tabs-mode t)
+;;                   (c-set-style "linux-tabs-only")))))
+;;  ) 
 
 (defun dotspacemacs/user-init ()
   "Initialization for user code:
@@ -449,7 +480,6 @@ This function is called immediately after `dotspacemacs/init', before layer
 configuration.
 It is mostly for variables that should be set before packages are loaded.
 If you are unsure, try setting them in `dotspacemacs/user-config' first."
-  (my-setup-indent 8)
   )
 
 (defun dotspacemacs/user-load ()
@@ -466,6 +496,7 @@ configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
  (spacemacs/helm-gtags-define-keys-for-mode 'c-mode)
+ (setq-default c-default-style "linux")
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
