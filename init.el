@@ -39,7 +39,7 @@ This function should only modify configuration layer settings."
      ;; `M-m f e R' (Emacs style) to install them.
      ;; ----------------------------------------------------------------
      html
-     javascript
+     ;; javascript
      markdown
      python
      auto-completion
@@ -489,6 +489,8 @@ Put your configuration code here, except for variables that should be set
 before packages are loaded."
   (spacemacs/helm-gtags-define-keys-for-mode 'c-mode)
   (setq-default c-default-style "linux")
+  (setq-default indent-tabs-mode t)
+  (setq-default tab-width 8)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
